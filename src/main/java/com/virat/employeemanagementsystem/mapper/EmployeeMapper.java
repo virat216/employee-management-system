@@ -9,7 +9,10 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = DepartmentMapper.class)
+@Mapper(componentModel = "spring", uses ={
+        DepartmentMapper.class,
+        RoleMapper.class
+})
 public interface EmployeeMapper {
 
     @Mapping(target = "id", ignore = true)

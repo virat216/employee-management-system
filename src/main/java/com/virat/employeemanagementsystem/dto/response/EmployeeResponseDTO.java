@@ -27,4 +27,6 @@ public class EmployeeResponseDTO {
     private LocalDate hireDate;
 
     private DepartmentSummaryDTO department;
+
+    private RoleSummaryDTO role;
 }

@@ -39,4 +39,7 @@ public class EmployeeRequestDTO {
 
     @NotNull(message = "Department ID is required.")
     private Long departmentId;
+
+    @NotNull(message = "Role ID is required.")
+    private Long roleId;
 }

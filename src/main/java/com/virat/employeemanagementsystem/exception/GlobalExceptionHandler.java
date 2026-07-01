@@ -84,4 +84,39 @@ public class GlobalExceptionHandler {
                         ex.getMessage()
                 ));
     }
+
+    @ExceptionHandler(RoleAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleRoleAlreadyExists(
+            RoleAlreadyExistsException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(buildErrorResponse(
+                        HttpStatus.CONFLICT,
+                        ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleRoleNotFound(
+            RoleNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(buildErrorResponse(
+                        HttpStatus.NOT_FOUND,
+                        ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(InactiveRoleException.class)
+    public ResponseEntity<ApiErrorResponse> handleInactiveRole(
+            InactiveRoleException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.BAD_REQUEST,
+                                ex.getMessage()
+                        )
+                );
+    }
 }

@@ -3,9 +3,13 @@ package com.virat.employeemanagementsystem.service.impl;
 import com.virat.employeemanagementsystem.dto.request.EmployeeRequestDTO;
 import com.virat.employeemanagementsystem.dto.response.EmployeeResponseDTO;
 import com.virat.employeemanagementsystem.entity.Employee;
+import com.virat.employeemanagementsystem.entity.Role;
+import com.virat.employeemanagementsystem.exception.InactiveRoleException;
+import com.virat.employeemanagementsystem.exception.RoleNotFoundException;
 import com.virat.employeemanagementsystem.mapper.EmployeeMapper;
 import com.virat.employeemanagementsystem.repository.DepartmentRepository;
 import com.virat.employeemanagementsystem.repository.EmployeeRepository;
+import com.virat.employeemanagementsystem.repository.RoleRepository;
 import com.virat.employeemanagementsystem.service.EmployeeService;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +30,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
+    private final RoleRepository roleRepository;
+
     @Transactional
     @Override
     public EmployeeResponseDTO saveEmployee(EmployeeRequestDTO requestDTO) {
         Department department = findDepartmentById(
                 requestDTO.getDepartmentId()
         );
+        Role role = findActiveRoleById(
+                requestDTO.getRoleId()
+        );
         Employee employee = employeeMapper.toEntity(requestDTO);
         employee.setDepartment(department);
+        employee.setRole(role);
         Employee savedEmployee = employeeRepository.save(employee);
         return employeeMapper.toResponseDTO(savedEmployee);
     }
@@ -65,12 +75,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = findDepartmentById(
                 requestDTO.getDepartmentId()
         );
-
+        Role role = findActiveRoleById(
+                requestDTO.getRoleId()
+        );
         employeeMapper.updateEntity(
                 requestDTO,
                 employee
         );
         employee.setDepartment(department);
+
+        employee.setRole(role);
 
         Employee updatedEmployee = employeeRepository.save(employee);
 
@@ -96,6 +110,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return departmentRepository.findById(id)
                 .orElseThrow(() -> new DepartmentNotFoundException(id));
+    }
+
+    private Role findActiveRoleById(Long id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new RoleNotFoundException(id));
+
+        if (!role.isActive()) {
+            throw new InactiveRoleException(role.getId());
+        }
+
+        return role;
     }
 
 }

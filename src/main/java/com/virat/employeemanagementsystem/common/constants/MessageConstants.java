@@ -37,4 +37,21 @@ public final class MessageConstants {
 
     public static final String EMPLOYEES_FETCHED =
             "Employees fetched successfully.";
+
+
+
+    public static final String ROLE_CREATED =
+            "Role created successfully.";
+
+    public static final String ROLE_UPDATED =
+            "Role updated successfully.";
+
+    public static final String ROLE_DELETED =
+            "Role deleted successfully.";
+
+    public static final String ROLE_FETCHED =
+            "Role fetched successfully.";
+
+    public static final String ROLES_FETCHED =
+            "Roles fetched successfully.";
 }
