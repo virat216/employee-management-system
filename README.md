@@ -282,7 +282,7 @@ or run `EmployeeManagementSystemApplication` from IntelliJ IDEA.
 **Virat Jaiswal**
 
 - GitHub: https://github.com/virat216
-- LinkedIn: *(Add your LinkedIn profile URL here)*
+- LinkedIn: https://www.linkedin.com/in/viratjaiswal216/
 
 ---
 
