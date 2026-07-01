@@ -20,4 +20,21 @@ public final class MessageConstants {
 
     public static final String DEPARTMENTS_FETCHED =
             "Departments fetched successfully.";
+
+
+
+    public static final String EMPLOYEE_CREATED =
+            "Employee created successfully.";
+
+    public static final String EMPLOYEE_UPDATED =
+            "Employee updated successfully.";
+
+    public static final String EMPLOYEE_DELETED =
+            "Employee deleted successfully.";
+
+    public static final String EMPLOYEE_FETCHED =
+            "Employee fetched successfully.";
+
+    public static final String EMPLOYEES_FETCHED =
+            "Employees fetched successfully.";
 }

@@ -6,4 +6,7 @@ public class DepartmentNotFoundException extends RuntimeException {
         super(message);
     }
 
+    public DepartmentNotFoundException(Long id) {
+        super("Department not found with id: " + id);
+    }
 }

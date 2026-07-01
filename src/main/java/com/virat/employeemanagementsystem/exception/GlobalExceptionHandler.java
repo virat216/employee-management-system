@@ -73,4 +73,15 @@ public class GlobalExceptionHandler {
                 .errors(errors)
                 .build();
     }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleEmployeeNotFound(
+            EmployeeNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(buildErrorResponse(
+                        HttpStatus.NOT_FOUND,
+                        ex.getMessage()
+                ));
+    }
 }
