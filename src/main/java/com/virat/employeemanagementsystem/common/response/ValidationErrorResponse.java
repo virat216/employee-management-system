@@ -1,15 +1,16 @@
-package com.virat.employeemanagementsystem.exception;
+package com.virat.employeemanagementsystem.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class ApiErrorResponse {
+public class ValidationErrorResponse {
 
     private LocalDateTime timestamp;
 
@@ -19,4 +20,5 @@ public class ApiErrorResponse {
 
     private String message;
 
+    private Map<String, String> errors;
 }

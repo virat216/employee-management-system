@@ -1,14 +1,16 @@
 package com.virat.employeemanagementsystem.exception;
 
+import com.virat.employeemanagementsystem.common.response.ApiErrorResponse;
+import com.virat.employeemanagementsystem.common.response.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -17,15 +19,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleDepartmentNotFound(
             DepartmentNotFoundException ex) {
 
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_FOUND.name())
-                .message(ex.getMessage())
-                .build();
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(response);
+                .body(buildErrorResponse(
+                        HttpStatus.NOT_FOUND,
+                        ex.getMessage()
+                ));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -42,17 +40,37 @@ public class GlobalExceptionHandler {
                                 error.getDefaultMessage()
                         ));
 
-        ValidationErrorResponse response =
-                ValidationErrorResponse.builder()
-                        .timestamp(LocalDateTime.now())
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .error(HttpStatus.BAD_REQUEST.name())
-                        .message("Validation failed")
-                        .errors(errors)
-                        .build();
-
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest()
+                .body(buildValidationErrorResponse(
+                        HttpStatus.BAD_REQUEST,
+                        "Validation failed",
+                        errors
+                ));
     }
 
+    private ApiErrorResponse buildErrorResponse(
+            HttpStatus status,
+            String message) {
 
+        return ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(status.name())
+                .message(message)
+                .build();
+    }
+
+    private ValidationErrorResponse buildValidationErrorResponse(
+            HttpStatus status,
+            String message,
+            Map<String, String> errors) {
+
+        return ValidationErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(status.name())
+                .message(message)
+                .errors(errors)
+                .build();
+    }
 }

@@ -1,5 +1,7 @@
 package com.virat.employeemanagementsystem.controller;
 
+import com.virat.employeemanagementsystem.common.constants.MessageConstants;
+import com.virat.employeemanagementsystem.common.response.ApiResponse;
 import com.virat.employeemanagementsystem.dto.request.DepartmentRequestDTO;
 import com.virat.employeemanagementsystem.dto.response.DepartmentResponseDTO;
 import com.virat.employeemanagementsystem.service.DepartmentService;
@@ -19,51 +21,73 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @PostMapping
-    public ResponseEntity<DepartmentResponseDTO> saveDepartment(
+    public ResponseEntity<ApiResponse<DepartmentResponseDTO>> saveDepartment(
             @Valid @RequestBody DepartmentRequestDTO requestDTO) {
 
         DepartmentResponseDTO response =
                 departmentService.saveDepartment(requestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(response);
+                .body(ApiResponse.success(
+                        MessageConstants.DEPARTMENT_CREATED,
+                        response
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<DepartmentResponseDTO>> getAllDepartments() {
+    public ResponseEntity<ApiResponse<List<DepartmentResponseDTO>>> getAllDepartments() {
+        List<DepartmentResponseDTO> response = departmentService.getAllDepartments();
 
         return ResponseEntity.ok(
-                departmentService.getAllDepartments()
+                ApiResponse.success(
+                        MessageConstants.DEPARTMENT_FETCHED,
+                        response
+                )
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DepartmentResponseDTO> getDepartmentById(
+    public ResponseEntity<ApiResponse<DepartmentResponseDTO>>getDepartmentById(
             @PathVariable Long id) {
+        DepartmentResponseDTO response =
+                departmentService.getDepartmentById(id);
 
         return ResponseEntity.ok(
-                departmentService.getDepartmentById(id)
+                ApiResponse.success(
+                        MessageConstants.DEPARTMENT_FETCHED,
+                        response
+                )
         );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DepartmentResponseDTO> updateDepartment(
+    public ResponseEntity<ApiResponse<DepartmentResponseDTO>> updateDepartment(
             @PathVariable Long id,
             @Valid
             @RequestBody DepartmentRequestDTO requestDTO) {
+        DepartmentResponseDTO response =
+                departmentService.updateDepartment(id, requestDTO);
 
         return ResponseEntity.ok(
-                departmentService.updateDepartment(id, requestDTO)
+                ApiResponse.success(
+                        MessageConstants.DEPARTMENT_UPDATED,
+                        response
+                )
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDepartment(
+    public ResponseEntity<ApiResponse<Void>> deleteDepartment(
             @PathVariable Long id) {
 
         departmentService.deleteDepartment(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                ApiResponse.<Void>success(
+                        MessageConstants.DEPARTMENT_DELETED,
+                        null
+                )
+        );
     }
 
 }
