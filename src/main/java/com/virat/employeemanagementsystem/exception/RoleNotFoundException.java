@@ -1,12 +1,9 @@
 package com.virat.employeemanagementsystem.exception;
 
-public class RoleNotFoundException extends RuntimeException {
+public class RoleNotFoundException
+        extends ResourceNotFoundException {
 
     public RoleNotFoundException(String message) {
         super(message);
-    }
-
-    public RoleNotFoundException(Long id) {
-        super("Role not found with id: " + id);
     }
 }

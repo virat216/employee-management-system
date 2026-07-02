@@ -5,6 +5,7 @@ import com.virat.employeemanagementsystem.common.response.ApiResponse;
 import com.virat.employeemanagementsystem.dto.request.RoleRequestDTO;
 import com.virat.employeemanagementsystem.dto.response.RoleResponseDTO;
 import com.virat.employeemanagementsystem.service.RoleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class RoleController {
 
     private final RoleService roleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ApiResponse<RoleResponseDTO>> saveRole(
             @Valid @RequestBody RoleRequestDTO requestDTO) {
@@ -34,6 +36,7 @@ public class RoleController {
                 ));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
     @GetMapping
     public ResponseEntity<ApiResponse<List<RoleResponseDTO>>> getAllRoles() {
 
@@ -48,6 +51,7 @@ public class RoleController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponseDTO>> getRoleById(
             @PathVariable Long id) {
@@ -63,6 +67,7 @@ public class RoleController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponseDTO>> updateRole(
             @PathVariable Long id,
@@ -79,6 +84,7 @@ public class RoleController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteRole(
             @PathVariable Long id) {

@@ -1,9 +1,9 @@
 package com.virat.employeemanagementsystem.exception;
 
-public class RoleAlreadyExistsException
+public class EmployeeAlreadyAssignedException
         extends ConflictException {
 
-    public RoleAlreadyExistsException(String message) {
+    public EmployeeAlreadyAssignedException(String message) {
         super(message);
     }
 }

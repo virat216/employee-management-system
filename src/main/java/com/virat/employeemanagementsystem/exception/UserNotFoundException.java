@@ -1,9 +1,9 @@
 package com.virat.employeemanagementsystem.exception;
 
-public class DepartmentNotFoundException
+public class UserNotFoundException
         extends ResourceNotFoundException {
 
-    public DepartmentNotFoundException(String message) {
+    public UserNotFoundException(String message) {
         super(message);
     }
 }

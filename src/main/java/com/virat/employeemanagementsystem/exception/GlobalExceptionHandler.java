@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -15,16 +17,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(DepartmentNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleDepartmentNotFound(
-            DepartmentNotFoundException ex) {
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(buildErrorResponse(
-                        HttpStatus.NOT_FOUND,
-                        ex.getMessage()
-                ));
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrorResponse> handleValidationException(
@@ -74,39 +66,6 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleEmployeeNotFound(
-            EmployeeNotFoundException ex) {
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(buildErrorResponse(
-                        HttpStatus.NOT_FOUND,
-                        ex.getMessage()
-                ));
-    }
-
-    @ExceptionHandler(RoleAlreadyExistsException.class)
-    public ResponseEntity<ApiErrorResponse> handleRoleAlreadyExists(
-            RoleAlreadyExistsException ex) {
-
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(buildErrorResponse(
-                        HttpStatus.CONFLICT,
-                        ex.getMessage()
-                ));
-    }
-
-    @ExceptionHandler(RoleNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleRoleNotFound(
-            RoleNotFoundException ex) {
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(buildErrorResponse(
-                        HttpStatus.NOT_FOUND,
-                        ex.getMessage()
-                ));
-    }
-
     @ExceptionHandler(InactiveRoleException.class)
     public ResponseEntity<ApiErrorResponse> handleInactiveRole(
             InactiveRoleException ex) {
@@ -116,6 +75,73 @@ public class GlobalExceptionHandler {
                         buildErrorResponse(
                                 HttpStatus.BAD_REQUEST,
                                 ex.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
+            ResourceNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.NOT_FOUND,
+                                ex.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiErrorResponse> handleConflict(
+            ConflictException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.CONFLICT,
+                                ex.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDenied(
+            AccessDeniedException ex) {
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.FORBIDDEN,
+                                "You are not authorized to perform this action."
+                        )
+                );
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthenticationException(
+            AuthenticationException ex) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.UNAUTHORIZED,
+                                "Invalid username or password."
+                        )
+                );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiErrorResponse> handleException(
+            Exception ex) {
+
+        ex.printStackTrace();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        buildErrorResponse(
+                                HttpStatus.INTERNAL_SERVER_ERROR,
+                                "Something went wrong. Please try again later."
                         )
                 );
     }

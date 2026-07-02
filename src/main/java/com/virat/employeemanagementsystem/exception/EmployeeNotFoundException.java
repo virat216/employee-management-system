@@ -1,12 +1,9 @@
 package com.virat.employeemanagementsystem.exception;
 
-public class EmployeeNotFoundException extends RuntimeException {
+public class EmployeeNotFoundException
+        extends ResourceNotFoundException {
 
     public EmployeeNotFoundException(String message) {
         super(message);
-    }
-
-    public EmployeeNotFoundException(Long id) {
-        super("Employee not found with id: " + id);
     }
 }
