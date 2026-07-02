@@ -1,237 +1,356 @@
 # Employee Management System
 
-A production-ready Employee Management System backend built using **Java**, **Spring Boot**, **Spring Data JPA**, and **PostgreSQL** following enterprise-level architecture and best practices.
+A production-ready Employee Management System backend built using **Java**, **Spring Boot**, **Spring Security**, **JWT**, **Spring Data JPA**, and **PostgreSQL** following enterprise-level architecture and clean coding principles.
 
 ---
 
-## Project Overview
+# Project Overview
 
-This project is being developed to simulate a real-world Employee Management System used in organizations. It follows a layered architecture with DTOs, MapStruct, Lombok, validation, global exception handling, and RESTful APIs.
+This project simulates a real-world Employee Management System used in organizations.
 
-The project is being built module by module while following software engineering best practices instead of simple CRUD implementations.
+The application follows enterprise backend development practices including:
+
+- Layered Architecture
+- DTO Pattern
+- MapStruct
+- Bean Validation
+- Global Exception Handling
+- JWT Authentication
+- Role-Based Authorization
+- Soft Delete
+- RESTful API Design
+
+The project is being developed phase by phase while following SDLC principles instead of creating simple CRUD applications.
 
 ---
 
-## Features
+# Features
 
-### Department Module
+## Department Management
+
 - Create Department
 - Get All Departments
 - Get Department by ID
 - Update Department
 - Delete Department
 
-### Architecture
+---
+
+## Employee Management
+
+- Create Employee
+- Get All Employees
+- Get Employee by ID
+- Update Employee
+- Delete Employee
+- Department Mapping
+- Role Mapping
+
+---
+
+## Role Management
+
+- Create Role
+- Get All Roles
+- Get Role by ID
+- Update Role
+- Soft Delete Role
+- Prevent Duplicate Roles
+- Prevent Assignment of Inactive Roles
+
+---
+
+## User Management
+
+- Create User Account
+- Username Validation
+- BCrypt Password Encryption
+- One User Per Employee
+- Enable/Disable User
+
+---
+
+## Authentication & Authorization
+
+- Spring Security
+- JWT Authentication
+- Stateless Authentication
+- BCrypt Password Encoding
+- Login API
+- JWT Authentication Filter
+- Custom UserDetailsService
+- Custom UserPrincipal
+- Role-Based Authorization
+- ADMIN
+- HR
+- EMPLOYEE
+
+---
+
+## Validation
+
+- Jakarta Bean Validation
+- Custom Validation Messages
+- Request DTO Validation
+
+---
+
+## Exception Handling
+
+- Global Exception Handler
+- Standard API Error Responses
+- Validation Error Responses
+- Custom Exceptions
+- Authentication Error Handling
+- Authorization Error Handling
+
+---
+
+## Architecture
+
 - Layered Architecture
 - DTO Pattern
+- Repository Pattern
 - Service Layer
-- Repository Layer
-- Entity Layer
 - Controller Layer
-
-### Validation
-- Bean Validation
-- Custom Validation Messages
-
-### Exception Handling
-- Custom Exceptions
-- Global Exception Handler
-- Standard Error Responses
-
-### Other Features
-- Lombok
-- MapStruct
-- RESTful APIs
-- PostgreSQL Integration
-- ResponseEntity
+- MapStruct Mapping
 - Constructor Injection
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 | Technology | Version |
 |------------|----------|
 | Java | 25 |
-| Spring Boot | 4.1.x |
+| Spring Boot | 4.x |
+| Spring Security | Latest |
 | Spring Data JPA | Latest |
 | PostgreSQL | 18 |
 | Maven | Latest |
+| JWT | JJWT |
 | Lombok | ✓ |
 | MapStruct | ✓ |
 | Jakarta Validation | ✓ |
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 src
 └── main
     ├── java
-    │   └── com.virat.employeemanagementsystem
-    │       ├── config
-    │       ├── controller
-    │       ├── dto
-    │       │   ├── request
-    │       │   └── response
-    │       ├── entity
-    │       ├── exception
-    │       ├── mapper
-    │       ├── repository
-    │       ├── service
-    │       │   └── impl
-    │       └── EmployeeManagementSystemApplication.java
     │
-    └── resources
-        └── application.properties
+    └── com.virat.employeemanagementsystem
+        ├── common
+        ├── config
+        ├── controller
+        ├── data
+        ├── dto
+        │   ├── request
+        │   └── response
+        ├── entity
+        ├── exception
+        ├── mapper
+        ├── repository
+        ├── security
+        │   ├── config
+        │   ├── jwt
+        │   ├── principal
+        │   └── service
+        ├── service
+        │   └── impl
+        └── EmployeeManagementSystemApplication.java
 ```
 
 ---
 
-## Architecture
+# Architecture
 
 ```
                 Client
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
-           REST Controller
+         Spring Security Filter
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
-          Request DTO (@Valid)
+         JWT Authentication Filter
 
-                  │
+                   │
 
-                  ▼
+                   ▼
+
+            REST Controller
+
+                   │
+
+                   ▼
+
+           Request DTO (@Valid)
+
+                   │
+
+                   ▼
 
              Service Layer
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
               MapStruct
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
                 Entity
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
              Repository
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
-             PostgreSQL DB
+             PostgreSQL Database
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
                 Entity
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
               MapStruct
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
-           Response DTO
+            Response DTO
 
-                  │
+                   │
 
-                  ▼
+                   ▼
 
-          ResponseEntity
+             ApiResponse<T>
 ```
 
 ---
 
-## API Endpoints
+# Security Flow
 
-| Method | Endpoint | Description |
-|----------|--------------------------|--------------------------|
-| POST | /api/departments | Create Department |
-| GET | /api/departments | Get All Departments |
-| GET | /api/departments/{id} | Get Department By ID |
-| PUT | /api/departments/{id} | Update Department |
-| DELETE | /api/departments/{id} | Delete Department |
+```
+Client
+
+   │
+
+Login
+
+   │
+
+Username + Password
+
+   │
+
+AuthenticationManager
+
+   │
+
+CustomUserDetailsService
+
+   │
+
+JWT Generated
+
+   │
+
+Client Stores JWT
+
+   │
+
+Bearer Token
+
+   │
+
+JwtAuthenticationFilter
+
+   │
+
+SecurityContext
+
+   │
+
+Role-Based Authorization
+
+   │
+
+Controller
+```
 
 ---
 
-## Database
+# API Modules
 
-Current Tables
+- Authentication APIs
+- Department APIs
+- Employee APIs
+- Role APIs
+- User APIs
+
+---
+
+# Database Tables
 
 - departments
-
-Future Tables
-
 - employees
 - roles
 - users
 
 ---
 
-## Current Progress
+# Current Progress
+
+## Completed
 
 - Project Setup
 - PostgreSQL Integration
 - Department Module
-- CRUD Operations
+- Employee Module
+- Role Module
+- User Module
 - DTO Pattern
 - MapStruct
 - Bean Validation
-- Custom Exceptions
 - Global Exception Handling
-- ResponseEntity
+- Custom Exceptions
+- API Response Wrapper
+- JWT Authentication
+- Spring Security
+- Role-Based Authorization
+- BCrypt Password Encryption
+- Soft Delete
+- Data Initializer
 
 ---
 
-## Roadmap
+# Upcoming Features
 
-### Phase 1
-- Department Module
-
-### Phase 2
-- Common Infrastructure
-
-### Phase 3
-- Employee Module
-- Entity Relationships
-- Email Validation
-- Salary Validation
-
-### Phase 4
-- Role Module
-
-### Phase 5
-- User Module
-
-### Phase 6
-- Authentication & Authorization
-- Spring Security
-- JWT Authentication
-- Role-Based Access Control
-
-### Phase 7
-- Swagger/OpenAPI
+- Swagger / OpenAPI
 - Pagination
 - Sorting
 - Searching
@@ -240,52 +359,66 @@ Future Tables
 - Unit Testing
 - Docker
 - Deployment
+- CI/CD
 
 ---
 
-## Getting Started
+# Getting Started
 
-### Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/virat216/employee-management-system.git
 ```
 
-### Navigate
+## Navigate
 
 ```bash
 cd employee-management-system
 ```
 
-### Configure Database
+## Configure Database
 
-Update `application.properties`
+Update:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:6388/employee_management
+application.properties
+```
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/employee_management
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
 
-### Run
+## Run
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-or run `EmployeeManagementSystemApplication` from IntelliJ IDEA.
+or run
+
+```
+EmployeeManagementSystemApplication
+```
+
+from IntelliJ IDEA.
 
 ---
 
-## Author
+# Author
 
 **Virat Jaiswal**
 
-- GitHub: https://github.com/virat216
-- LinkedIn: https://www.linkedin.com/in/viratjaiswal216/
+GitHub:
+https://github.com/virat216
+
+LinkedIn:
+https://www.linkedin.com/in/viratjaiswal216/
 
 ---
 
-## License
+# License
 
 This project is developed for learning purposes and portfolio demonstration.
