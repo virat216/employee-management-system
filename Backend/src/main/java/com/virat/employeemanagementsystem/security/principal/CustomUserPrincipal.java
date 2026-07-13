@@ -40,7 +40,7 @@ public class CustomUserPrincipal implements UserDetails {
 
         this.authorities = List.of(
                 new SimpleGrantedAuthority(
-                        "ROLE_" + user.getEmployee().getRole().getName()
+                        "ROLE_" + user.getSecurityRole().name()
                 )
         );
     }

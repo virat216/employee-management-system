@@ -3,11 +3,11 @@ import api from "../../../lib/axios";
 import type { ApiResponse } from "../../../shared/types/api";
 import type { Department } from "../types/department";
 
-export const getDepartments = async () => {
+export const getDepartmentLookup = async () => {
 
     const response =
         await api.get<ApiResponse<Department[]>>(
-            "/departments"
+            "/departments/lookup"
         );
 
     return response.data;

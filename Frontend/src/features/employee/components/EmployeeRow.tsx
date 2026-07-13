@@ -14,6 +14,8 @@ interface EmployeeRowProps {
 
     onEdit: (employee: Employee) => void;
 
+    onDelete: (employee: Employee) => void;
+
 }
 
 function EmployeeRow({
@@ -21,6 +23,8 @@ function EmployeeRow({
     employee,
 
     onEdit,
+
+    onDelete,
 
 }: EmployeeRowProps) {
 
@@ -69,29 +73,27 @@ function EmployeeRow({
                 <div className="flex justify-center gap-4">
 
                     <button
-
+                        type="button"
                         onClick={() => onEdit(employee)}
-
+                        aria-label={`Edit ${employee.firstName} ${employee.lastName}`}
                     >
 
                         <Pencil
-
                             size={18}
-
                             className="text-blue-600 hover:text-blue-800"
-
                         />
 
                     </button>
 
-                    <button>
+                    <button
+                        type="button"
+                        onClick={() => onDelete(employee)}
+                        aria-label={`Delete ${employee.firstName} ${employee.lastName}`}
+                    >
 
                         <Trash2
-
                             size={18}
-
                             className="text-red-600 hover:text-red-800"
-
                         />
 
                     </button>

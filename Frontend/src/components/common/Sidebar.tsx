@@ -42,11 +42,35 @@ function Sidebar() {
     />
 </NavLink>
 
-                <SidebarItem icon={<Building2 size={20} />} text="Departments" />
+                <NavLink
+    to="/departments"
+    className="block"
+>
+    <SidebarItem
+        icon={<Building2 size={20} />}
+        text="Departments"
+    />
+</NavLink>
 
-                <SidebarItem icon={<Shield size={20} />} text="Roles" />
+               <NavLink
+    to="/roles"
+    className="block"
+>
+    <SidebarItem
+        icon={<Shield size={20} />}
+        text="Roles"
+    />
+</NavLink>
 
-                <SidebarItem icon={<UserCog size={20} />} text="Users" />
+<NavLink
+    to="/users"
+    className="block"
+>
+    <SidebarItem
+        icon={<UserCog size={20} />}
+        text="Users"
+    />
+</NavLink>
 
                 <SidebarItem icon={<LogOut size={20} />} text="Logout" />
 

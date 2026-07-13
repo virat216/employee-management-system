@@ -20,4 +20,6 @@ public interface RoleService {
 
     void deleteRole(Long id);
 
+    List<RoleResponseDTO> getRoleLookup();
+
 }

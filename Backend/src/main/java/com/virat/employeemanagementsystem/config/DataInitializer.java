@@ -1,52 +1,16 @@
 package com.virat.employeemanagementsystem.config;
 
-import com.virat.employeemanagementsystem.entity.Role;
-import com.virat.employeemanagementsystem.repository.RoleRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class DataInitializer implements CommandLineRunner
-{
-    private final RoleRepository roleRepository;
+public class DataInitializer implements CommandLineRunner {
 
     @Override
-    public void run(String... args)
-    {
-        createRoleIfNotExists(
-                "ADMIN",
-                "System Administrator"
-        );
+    public void run(String... args) {
 
-        createRoleIfNotExists(
-                "HR",
-                "Human Resources"
-        );
+        // Reserved for future sample data initialization.
 
-        createRoleIfNotExists(
-                "EMPLOYEE",
-                "Regular Employee"
-        );
     }
 
-    private void createRoleIfNotExists(
-            String name,
-            String description)
-    {
-
-        if (roleRepository.existsByName(name))
-        {
-            return;
-        }
-
-        Role role = Role.builder()
-                .name(name)
-                .description(description)
-                .active(true)
-                .build();
-
-        roleRepository.save(role);
-    }
 }

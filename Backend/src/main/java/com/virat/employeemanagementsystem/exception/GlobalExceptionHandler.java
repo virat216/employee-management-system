@@ -1,6 +1,7 @@
 package com.virat.employeemanagementsystem.exception;
 
 import com.virat.employeemanagementsystem.common.response.ApiErrorResponse;
+import com.virat.employeemanagementsystem.common.response.ApiResponse;
 import com.virat.employeemanagementsystem.common.response.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -144,5 +145,22 @@ public class GlobalExceptionHandler {
                                 "Something went wrong. Please try again later."
                         )
                 );
+    }
+
+    @ExceptionHandler(EmployeeDeletionException.class)
+    public ResponseEntity<ApiResponse<Void>> handleEmployeeDeletionException(
+            EmployeeDeletionException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DepartmentDeletionException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDepartmentDeletionException(
+            DepartmentDeletionException ex) {
+
+        return ResponseEntity.badRequest().body(
+                ApiResponse.error(ex.getMessage())
+        );
     }
 }

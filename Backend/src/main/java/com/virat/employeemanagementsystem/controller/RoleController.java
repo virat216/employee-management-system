@@ -51,6 +51,20 @@ public class RoleController {
         );
     }
 
+    @GetMapping("/lookup")
+    public ResponseEntity<ApiResponse<List<RoleResponseDTO>>> getRoleLookup() {
+
+        List<RoleResponseDTO> response =
+                roleService.getRoleLookup();
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        MessageConstants.ROLES_FETCHED,
+                        response
+                )
+        );
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN','HR')")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponseDTO>> getRoleById(

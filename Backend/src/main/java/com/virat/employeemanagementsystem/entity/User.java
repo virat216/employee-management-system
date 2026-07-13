@@ -1,5 +1,6 @@
 package com.virat.employeemanagementsystem.entity;
 
+import com.virat.employeemanagementsystem.security.role.SecurityRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,4 +33,8 @@ public class User {
             unique = true
     )
     private Employee employee;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SecurityRole securityRole;
 }

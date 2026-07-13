@@ -46,6 +46,8 @@ function EmployeeDialog({
 
     async function handleSave() {
 
+        console.log("formData =", formData);
+
         const payload = {
 
             firstName: formData.firstName,
@@ -65,6 +67,8 @@ function EmployeeDialog({
             roleId: formData.roleId,
 
         };
+
+        console.log("payload.salary =", payload.salary);
 
         try {
 

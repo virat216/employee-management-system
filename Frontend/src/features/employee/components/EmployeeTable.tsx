@@ -1,6 +1,5 @@
 import Card from "../../../components/common/Card";
-import LoadingSpinner from "../../../components/common/LoadingSpinner";
-import EmptyState from "../../../components/common/EmptyState";
+import TableSkeleton from "../../../components/common/TableSkeleton";
 
 import EmployeeRow from "./EmployeeRow";
 
@@ -14,6 +13,8 @@ interface EmployeeTableProps {
 
     onEdit: (employee: Employee) => void;
 
+    onDelete: (employee: Employee) => void;
+
 }
 
 function EmployeeTable({
@@ -24,19 +25,14 @@ function EmployeeTable({
 
     onEdit,
 
+    onDelete,
+
+
 }: EmployeeTableProps) {
 
     if (loading) {
-
-        return <LoadingSpinner />;
-
-    }
-
-    if (employees.length === 0) {
-
-        return <EmptyState title="No employees found." />;
-
-    }
+    return <TableSkeleton columns={7} rows={8} />;
+}
 
     return (
 
@@ -77,6 +73,8 @@ function EmployeeTable({
                             employee={employee}
 
                             onEdit={onEdit}
+
+                            onDelete={onDelete}
 
                         />
 

@@ -2,19 +2,66 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getEmployees } from "../api/employeeService";
 
-export function useEmployeesQuery() {
+interface UseEmployeesQueryProps {
+
+    page: number;
+
+    size: number;
+
+    sortBy: string;
+
+    direction: "asc" | "desc";
+
+    departmentId?: number;
+
+    roleId?: number;
+
+}
+
+export function useEmployeesQuery({
+
+    page,
+
+    size,
+
+    sortBy,
+
+    direction,
+
+    departmentId,
+
+    roleId,
+
+}: UseEmployeesQueryProps) {
 
     return useQuery({
 
-        queryKey: ["employees"],
+        queryKey: [
+            "employees",
+            page,
+            size,
+            sortBy,
+            direction,
+            departmentId,
+            roleId,
+        ],
 
         queryFn: async () => {
 
-            const response = await getEmployees();
+            const response = await getEmployees(
+                page,
+                size,
+                sortBy,
+                direction,
+                departmentId,
+                roleId
+            );
 
             return response.data;
 
         },
+
+        placeholderData: (previousData) => previousData,
 
     });
 

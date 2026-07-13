@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { showError, showSuccess } from "../../../shared/utils/toast";
 import { createEmployee } from "../api/employeeService";
 
 import type { EmployeeRequest } from "../types/employeeRequest";
@@ -15,13 +15,21 @@ export function useCreateEmployee() {
 
         onSuccess: () => {
 
-            queryClient.invalidateQueries({
+    queryClient.invalidateQueries({
 
-                queryKey: ["employees"],
+        queryKey: ["employees"],
 
-            });
+    });
 
-        },
+    showSuccess("Employee created successfully.");
+
+},
+
+onError: () => {
+
+    showError("Failed to create employee.");
+
+},
 
     });
 

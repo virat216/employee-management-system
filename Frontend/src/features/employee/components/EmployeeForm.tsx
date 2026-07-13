@@ -1,7 +1,7 @@
 import InputField from "../../../components/ui/InputField";
 
-import { useDepartmentsQuery } from "../../department/hooks/useDepartmentsQuery";
-import { useRolesQuery } from "../../role/hooks/useRolesQuery";
+import { useDepartmentLookupQuery } from "../../department/hooks/useDepartmentLookupQuery";
+import { useRoleLookupQuery, } from "../../role/hooks/useRoleLookupQuery";
 
 import type { EmployeeFormData } from "../types/employeeForm";
 
@@ -19,14 +19,14 @@ function EmployeeForm({
 }: EmployeeFormProps) {
 
     const {
-        data: departments = [],
-        isLoading: departmentsLoading,
-    } = useDepartmentsQuery();
+    data: departments = [],
+    isLoading: departmentsLoading,
+} = useDepartmentLookupQuery();
 
     const {
         data: roles = [],
         isLoading: rolesLoading,
-    } = useRolesQuery();
+    } = useRoleLookupQuery()
 
     return (
         <form
@@ -87,17 +87,19 @@ function EmployeeForm({
             />
 
             <InputField
-                label="Salary"
-                type="number"
-                placeholder="Enter salary"
-                value={employee.salary}
-                onChange={(e) =>
-                    setEmployee((prev) => ({
-                        ...prev,
-                        salary: e.target.value,
-                    }))
-                }
-            />
+    label="Salary"
+    type="number"
+    placeholder="Enter salary"
+    value={employee.salary}
+    onChange={(e) => {
+        console.log("Typed:", e.target.value);
+
+        setEmployee((prev) => ({
+            ...prev,
+            salary: e.target.value,
+        }));
+    }}
+/>
 
             <InputField
                 label="Hire Date"

@@ -2,16 +2,20 @@ package com.virat.employeemanagementsystem.controller;
 
 import com.virat.employeemanagementsystem.common.constants.MessageConstants;
 import com.virat.employeemanagementsystem.common.response.ApiResponse;
+import com.virat.employeemanagementsystem.common.response.PageResponse;
 import com.virat.employeemanagementsystem.dto.request.DepartmentRequestDTO;
 import com.virat.employeemanagementsystem.dto.response.DepartmentResponseDTO;
 import com.virat.employeemanagementsystem.service.DepartmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import java.util.List;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -36,16 +40,55 @@ public class DepartmentController
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<DepartmentResponseDTO>>> getAllDepartments()
-    {
-        List<DepartmentResponseDTO> response = departmentService.getAllDepartments();
+    public ResponseEntity<ApiResponse<PageResponse<DepartmentResponseDTO>>> getAllDepartments(
+
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "30")
+            int size,
+
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+
+            @RequestParam(defaultValue = "asc")
+            String direction,
+
+            @RequestParam(defaultValue = "")
+            String search
+
+    ) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        PageResponse<DepartmentResponseDTO> response =
+                departmentService.getAllDepartments(pageable,search);
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        MessageConstants.DEPARTMENT_FETCHED,
+                        MessageConstants.DEPARTMENTS_FETCHED,
                         response
                 )
         );
+    }
+
+    @GetMapping("/lookup")
+    public ResponseEntity<ApiResponse<List<DepartmentResponseDTO>>> getDepartmentLookup() {
+
+        List<DepartmentResponseDTO> response =
+                departmentService.getDepartmentLookup();
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        MessageConstants.DEPARTMENTS_FETCHED,
+                        response
+                )
+        );
+
     }
 
     @GetMapping("/{id}")

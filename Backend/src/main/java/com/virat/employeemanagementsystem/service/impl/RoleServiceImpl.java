@@ -86,4 +86,14 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findById(id)
                 .orElseThrow(() -> new RoleNotFoundException("Role not found with id: "+id));
     }
+
+    @Override
+    public List<RoleResponseDTO> getRoleLookup() {
+
+        return roleRepository.findAll()
+                .stream()
+                .map(roleMapper::toResponseDTO)
+                .toList();
+
+    }
 }
