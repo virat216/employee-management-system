@@ -2,9 +2,13 @@ package com.virat.employeemanagementsystem.controller;
 
 import com.virat.employeemanagementsystem.common.constants.MessageConstants;
 import com.virat.employeemanagementsystem.common.response.ApiResponse;
+import com.virat.employeemanagementsystem.common.response.PageResponse;
 import com.virat.employeemanagementsystem.dto.request.RoleRequestDTO;
 import com.virat.employeemanagementsystem.dto.response.RoleResponseDTO;
 import com.virat.employeemanagementsystem.service.RoleService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +42,37 @@ public class RoleController {
 
     @PreAuthorize("hasAnyRole('ADMIN','HR')")
     @GetMapping
-    public ResponseEntity<ApiResponse<List<RoleResponseDTO>>> getAllRoles() {
+    public ResponseEntity<ApiResponse<PageResponse<RoleResponseDTO>>> getAllRoles(
 
-        List<RoleResponseDTO> response =
-                roleService.getAllRoles();
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "10")
+            int size,
+
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+
+            @RequestParam(defaultValue = "asc")
+            String direction,
+
+            @RequestParam(defaultValue = "")
+            String search
+
+    ) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable =
+                PageRequest.of(page, size, sort);
+
+        PageResponse<RoleResponseDTO> response =
+                roleService.getAllRoles(
+                        pageable,
+                        search
+                );
 
         return ResponseEntity.ok(
                 ApiResponse.success(
@@ -49,6 +80,7 @@ public class RoleController {
                         response
                 )
         );
+
     }
 
     @GetMapping("/lookup")

@@ -163,4 +163,15 @@ public class GlobalExceptionHandler {
                 ApiResponse.error(ex.getMessage())
         );
     }
+
+    @ExceptionHandler(RoleDeletionException.class)
+    public ResponseEntity<ApiResponse<Void>> handleRoleDeletionException(
+            RoleDeletionException ex
+    ) {
+
+        return ResponseEntity.badRequest().body(
+                ApiResponse.error(ex.getMessage())
+        );
+
+    }
 }

@@ -10,4 +10,6 @@ public interface EmployeeRepository
 
     boolean existsByDepartmentId(Long departmentId);
 
+    boolean existsByRoleId(Long roleId);
+
 }

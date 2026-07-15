@@ -1,6 +1,4 @@
-export interface Role {
-
-    id: number;
+export interface RoleRequest {
 
     name: string;
 
