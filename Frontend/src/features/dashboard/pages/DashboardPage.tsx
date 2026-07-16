@@ -1,6 +1,10 @@
 import MainLayout from "../../../layouts/MainLayout";
-import DashboardGrid from "../components/DashboardGrid";
 import PageHeader from "../../../components/common/PageHeader";
+
+import DashboardGrid from "../components/DashboardGrid";
+import RecentEmployees from "../components/RecentEmployees";
+import DashboardCharts from "../components/DashboardCharts";
+import QuickActions from "../components/QuickActions";
 
 function DashboardPage() {
 
@@ -17,6 +21,12 @@ function DashboardPage() {
             />
 
             <DashboardGrid />
+
+            <DashboardCharts/>
+
+            <RecentEmployees />
+
+            <QuickActions/>
 
         </MainLayout>
 
