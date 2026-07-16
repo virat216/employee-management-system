@@ -19,4 +19,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     List<Role> findByActiveTrue();
 
+    long countByActiveTrue();
+
+    long countByActiveFalse();
+
 }

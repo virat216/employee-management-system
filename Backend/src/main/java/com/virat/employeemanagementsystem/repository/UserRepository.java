@@ -55,4 +55,8 @@ public interface UserRepository
     ORDER BY e.firstName
     """)
     List<Employee> findAvailableEmployees();
+
+    long countByEnabledTrue();
+
+    long countByEnabledFalse();
 }
