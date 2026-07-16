@@ -8,6 +8,7 @@ import com.virat.employeemanagementsystem.exception.EmployeeAlreadyAssignedExcep
 import com.virat.employeemanagementsystem.exception.EmployeeNotFoundException;
 import com.virat.employeemanagementsystem.exception.UserAlreadyExistsException;
 import com.virat.employeemanagementsystem.exception.UserNotFoundException;
+import com.virat.employeemanagementsystem.mapper.EmployeeMapper;
 import com.virat.employeemanagementsystem.mapper.UserMapper;
 import com.virat.employeemanagementsystem.repository.EmployeeRepository;
 import com.virat.employeemanagementsystem.repository.UserRepository;
@@ -16,6 +17,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.virat.employeemanagementsystem.common.response.PageResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.virat.employeemanagementsystem.dto.response.EmployeeSummaryDTO;
+import com.virat.employeemanagementsystem.mapper.EmployeeMapper;
 
 import java.util.List;
 
@@ -30,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final EmployeeMapper employeeMapper;
 
     @Override
     @Transactional
@@ -71,11 +80,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDTO> getAllUsers() {
+    public PageResponse<UserResponseDTO> getAllUsers(
+            Pageable pageable,
+            String search) {
 
-        List<User> users = userRepository.findAll();
+        Page<User> users =
 
-        return userMapper.toResponseDTOList(users);
+                userRepository.searchUsers(
+                        search,
+                        pageable
+                );
+        Page<UserResponseDTO> responsePage =
+                users.map(userMapper::toResponseDTO);
+
+        return PageResponse.<UserResponseDTO>builder()
+
+                .content(responsePage.getContent())
+
+                .page(responsePage.getNumber())
+
+                .size(responsePage.getSize())
+
+                .totalElements(responsePage.getTotalElements())
+
+                .totalPages(responsePage.getTotalPages())
+
+                .first(responsePage.isFirst())
+
+                .last(responsePage.isLast())
+
+                .build();
+
     }
 
     @Override
@@ -119,7 +154,8 @@ public class UserServiceImpl implements UserService {
 
         User user = findUserById(id);
 
-        userRepository.delete(user);
+        user.setEnabled(false);
+
     }
 
     private User findUserById(Long id) {
@@ -140,10 +176,15 @@ public class UserServiceImpl implements UserService {
 
         userRepository.findByUsername(username)
                 .ifPresent(existingUser -> {
+
                     if (!existingUser.getId().equals(currentUserId)) {
+
                         throw new UserAlreadyExistsException(username);
+
                     }
+
                 });
+
     }
 
     private void validateEmployeeAvailability(
@@ -156,6 +197,16 @@ public class UserServiceImpl implements UserService {
                         throw new EmployeeAlreadyAssignedException("Employee with id " + employeeId + " is already assigned.");
                     }
                 });
+    }
+
+    @Override
+    public List<EmployeeSummaryDTO> getAvailableEmployees() {
+
+        return userRepository.findAvailableEmployees()
+                .stream()
+                .map(employeeMapper::toSummaryDTO)
+                .toList();
+
     }
 
 }

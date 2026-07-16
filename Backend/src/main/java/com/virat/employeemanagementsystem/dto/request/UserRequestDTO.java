@@ -1,6 +1,7 @@
 package com.virat.employeemanagementsystem.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import com.virat.employeemanagementsystem.security.role.SecurityRole;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -22,4 +23,7 @@ public class UserRequestDTO {
 
     @NotNull(message = "Employee ID is required.")
     private Long employeeId;
+
+    @NotNull(message = "Security role is required.")
+    private SecurityRole securityRole;
 }

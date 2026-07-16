@@ -1,5 +1,6 @@
 package com.virat.employeemanagementsystem.dto.response;
 
+import com.virat.employeemanagementsystem.security.role.SecurityRole;
 import lombok.*;
 
 @Getter
@@ -16,4 +17,7 @@ public class UserResponseDTO {
     private boolean enabled;
 
     private EmployeeSummaryDTO employee;
+
+    private SecurityRole securityRole;
+
 }

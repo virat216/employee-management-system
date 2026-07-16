@@ -20,13 +20,13 @@ export function useDeleteRole() {
 
             });
 
-            showSuccess("Role deleted successfully.");
+            showSuccess("Role deactivated successfully.");
 
         },
 
         onError: () => {
 
-            showError("Failed to delete role.");
+            showError("Failed to deactivate role.");
 
         },
 

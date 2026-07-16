@@ -3,6 +3,7 @@ package com.virat.employeemanagementsystem.controller;
 import com.virat.employeemanagementsystem.common.constants.MessageConstants;
 import com.virat.employeemanagementsystem.common.response.ApiResponse;
 import com.virat.employeemanagementsystem.dto.request.UserRequestDTO;
+import com.virat.employeemanagementsystem.dto.response.EmployeeSummaryDTO;
 import com.virat.employeemanagementsystem.dto.response.UserResponseDTO;
 import com.virat.employeemanagementsystem.service.UserService;
 import jakarta.validation.Valid;
@@ -10,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.virat.employeemanagementsystem.common.response.PageResponse;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -19,6 +24,21 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/employee-lookup")
+    public ResponseEntity<ApiResponse<List<EmployeeSummaryDTO>>> getAvailableEmployees() {
+
+        List<EmployeeSummaryDTO> response =
+                userService.getAvailableEmployees();
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Available employees fetched successfully.",
+                        response
+                )
+        );
+
+    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<UserResponseDTO>> saveUser(
@@ -35,17 +55,57 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers() {
+    public ResponseEntity<ApiResponse<PageResponse<UserResponseDTO>>> getAllUsers(
 
-        List<UserResponseDTO> response =
-                userService.getAllUsers();
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "30")
+            int size,
+
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+
+            @RequestParam(defaultValue = "asc")
+            String direction,
+
+            @RequestParam(defaultValue = "")
+            String search
+
+    ) {
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+
+                ? Sort.by(sortBy).descending()
+
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable =
+
+                PageRequest.of(page, size, sort);
+
+        PageResponse<UserResponseDTO> response =
+
+                userService.getAllUsers(
+
+                        pageable,
+
+                        search
+
+                );
 
         return ResponseEntity.ok(
+
                 ApiResponse.success(
+
                         MessageConstants.USERS_FETCHED,
+
                         response
+
                 )
+
         );
+
     }
 
     @GetMapping("/{id}")

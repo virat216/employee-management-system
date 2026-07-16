@@ -4,6 +4,7 @@ import LoginPage from "../features/auth/pages/LoginPage";
 import DashboardPage from "../features/dashboard/pages/DashboardPage";
 import DepartmentPage from "../features/department/pages/DepartmentPage";
 import RolePage from "../features/role/pages/RolePage";
+import UserPage from "../features/user/pages/UserPage";
 
 import EmployeePage from "../features/employee/pages/EmployeePage";
 function AppRoutes() {
@@ -34,6 +35,11 @@ function AppRoutes() {
                 <Route
     path="/roles"
     element={<RolePage />}
+/>
+
+<Route
+    path="/users"
+    element={<UserPage />}
 />
 
             </Routes>
