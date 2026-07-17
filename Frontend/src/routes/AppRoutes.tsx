@@ -6,6 +6,9 @@ import DepartmentPage from "../features/department/pages/DepartmentPage";
 import RolePage from "../features/role/pages/RolePage";
 import UserPage from "../features/user/pages/UserPage";
 
+import ProtectedRoute from "../auth/ProtectedRoute";
+import PublicRoute from "../auth/PublicRoute";
+
 import EmployeePage from "../features/employee/pages/EmployeePage";
 function AppRoutes() {
     return (
@@ -13,13 +16,21 @@ function AppRoutes() {
             <Routes>
 
                 <Route
-                    path="/"
-                    element={<LoginPage />}
-                />
+    path="/"
+    element={
+        <PublicRoute>
+            <LoginPage />
+        </PublicRoute>
+    }
+/>
 
                 <Route
                     path="/dashboard"
-                    element={<DashboardPage />}
+                    element={
+    <ProtectedRoute>
+        <DashboardPage />
+    </ProtectedRoute>
+}
                 />
 
                 <Route

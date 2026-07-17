@@ -74,4 +74,7 @@ public final class MessageConstants
 
     public static final String DASHBOARD_SUMMARY_FETCHED =
             "Dashboard summary fetched successfully.";
+
+    public static final String CURRENT_USER_FETCHED =
+            "Current user fetched successfully.";
 }

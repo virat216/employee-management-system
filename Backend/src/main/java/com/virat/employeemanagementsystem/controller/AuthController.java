@@ -1,8 +1,11 @@
 package com.virat.employeemanagementsystem.controller;
 
+import com.virat.employeemanagementsystem.common.constants.MessageConstants;
 import com.virat.employeemanagementsystem.common.response.ApiResponse;
 import com.virat.employeemanagementsystem.dto.request.LoginRequestDTO;
+import com.virat.employeemanagementsystem.dto.response.CurrentUserResponseDTO;
 import com.virat.employeemanagementsystem.dto.response.LoginResponseDTO;
+import com.virat.employeemanagementsystem.dto.response.ProfileResponseDTO;
 import com.virat.employeemanagementsystem.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +32,18 @@ public class AuthController
                         response
                 )
         );
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<ProfileResponseDTO>>
+    getCurrentUser() {
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        MessageConstants.CURRENT_USER_FETCHED,
+                        authService.getCurrentUser()
+                )
+        );
+
     }
 }

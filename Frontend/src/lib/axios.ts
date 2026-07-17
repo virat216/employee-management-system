@@ -9,17 +9,38 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
 
+    console.log("========== AXIOS INTERCEPTOR ==========");
+
+    console.log("Request URL =", config.url);
+
     const token = localStorage.getItem("token");
 
-    const isAuthRequest = config.url?.startsWith("/auth");
+    console.log("Token from localStorage =", token);
 
-    if (token && !isAuthRequest) {
+    const isLoginRequest =
+        config.url === "/auth/login";
 
-        config.headers.Authorization = `Bearer ${token}`;
+    console.log("Is Login Request =", isLoginRequest);
+
+    if (token && !isLoginRequest) {
+
+        config.headers.Authorization =
+            `Bearer ${token}`;
+
+        console.log(
+            "Authorization Header Added"
+        );
+
+    } else {
+
+        console.log(
+            "Authorization Header NOT Added"
+        );
 
     }
 
     return config;
+
 });
 
 export default api;
