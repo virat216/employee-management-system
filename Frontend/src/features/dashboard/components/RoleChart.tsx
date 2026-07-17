@@ -1,115 +1,137 @@
 import Card from "../../../components/common/Card";
 
+import ChartSkeleton from "./ChartSkeleton";
+import ErrorState from "../../../components/common/ErrorState";
+import EmptyState from "../../../components/common/EmptyState";
+
 import {
-
     ResponsiveContainer,
-
-    PieChart,
-
-    Pie,
-
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
     Tooltip,
-
-    Cell,
-
+    LabelList,
 } from "recharts";
 
 import { useRoleChartQuery } from "../hooks/useRoleChartQuery";
 
-const COLORS = [
-
-    "#2563eb",
-
-    "#16a34a",
-
-    "#ea580c",
-
-    "#9333ea",
-
-    "#0891b2",
-
-    "#e11d48",
-
-];
-
 function RoleChart() {
 
     const {
-
         data,
-
         isLoading,
-
         isError,
-
     } = useRoleChartQuery();
 
     if (isLoading) {
-
-        return <Card>Loading...</Card>;
-
+        return <ChartSkeleton />;
     }
 
-    if (isError || !data) {
-
-        return <Card>Failed to load chart.</Card>;
-
+    if (isError) {
+        return (
+            <Card>
+                <ErrorState
+                    title="Unable to load role chart"
+                    message="Please try again later."
+                />
+            </Card>
+        );
     }
+
+    if (!data || data.length === 0) {
+        return (
+            <Card>
+                <EmptyState
+                    title="No Role Data"
+                    description="Add employees to view the role distribution."
+                />
+            </Card>
+        );
+    }
+
+    // Sort descending and keep only the Top 10 roles
+    const chartData = [...data]
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10);
 
     return (
-
         <Card>
 
-            <h2 className="mb-4 text-xl font-semibold">
+            <div className="mb-6 flex items-center justify-between">
 
-                Employees by Role
+                <h2 className="text-xl font-semibold">
+                    Employees by Role
+                </h2>
 
-            </h2>
+                <span className="text-sm text-gray-500">
+                    Top 10 Roles
+                </span>
 
-            <ResponsiveContainer width="100%" height={300}>
+            </div>
 
-                <PieChart>
+            <ResponsiveContainer
+                width="100%"
+                height={380}
+            >
+                <BarChart
+                    data={chartData}
+                    margin={{
+                        top: 20,
+                        right: 40,
+                        left: 20,
+                        bottom: 90,
+                    }}
+                >
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                    />
 
-                    <Pie
+                    <XAxis
+                        dataKey="label"
+                        interval={0}
+                        angle={-45}
+                        textAnchor="end"
+                        height={70}
+                        tick={{
+                            fontSize: 11,
+                        }}
+                    />
 
-                        data={data}
+                    <YAxis
+                        allowDecimals={false}
+                    />
 
+                    <Tooltip
+                        formatter={(value) => [
+                            `${value} Employees`,
+                            "Count",
+                        ]}
+                    />
+
+                    <Bar
                         dataKey="count"
-
-                        nameKey="label"
-
-                        outerRadius={100}
-
+                        fill="#2563eb"
+                        radius={[6, 6, 0, 0]}
                     >
+                        <LabelList
+                            dataKey="count"
+                            position="top"
+                            fontSize={11}
+                        />
+                    </Bar>
 
-                        {data.map((_, index) => (
-
-                            <Cell
-
-                                key={index}
-
-                                fill={
-                                    COLORS[
-                                        index % COLORS.length
-                                    ]
-                                }
-
-                            />
-
-                        ))}
-
-                    </Pie>
-
-                    <Tooltip />
-
-                </PieChart>
-
+                </BarChart>
             </ResponsiveContainer>
 
+            <p className="mt-3 text-center text-sm text-gray-500">
+                Showing the top 10 roles by employee count.
+            </p>
+
         </Card>
-
     );
-
 }
 
 export default RoleChart;

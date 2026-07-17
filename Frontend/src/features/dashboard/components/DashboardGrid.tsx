@@ -2,6 +2,10 @@ import DashboardCard from "./DashboardCard";
 
 import { useDashboardSummaryQuery } from "../hooks/useDashboardSummaryQuery";
 
+import DashboardGridSkeleton from "./DashboardGridSkeleton";
+
+import ErrorState from "../../../components/common/ErrorState";
+
 import {
 
     Users,
@@ -28,15 +32,25 @@ function DashboardGrid() {
 
     if (isLoading) {
 
-        return <h2>Loading Dashboard...</h2>;
+    return <DashboardGridSkeleton />;
 
-    }
+}
 
     if (isError || !summary) {
 
-        return <h2>Failed to load dashboard.</h2>;
+    return (
 
-    }
+        <ErrorState
+
+            title="Unable to load dashboard"
+
+            message="Please refresh the page or try again later."
+
+        />
+
+    );
+
+}
 
     return (
 

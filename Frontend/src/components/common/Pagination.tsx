@@ -27,7 +27,21 @@ function Pagination({
     }
 
     return (
-    <div className="mt-6 flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm">
+    <div className="
+        mt-6
+        flex
+        flex-col
+        gap-4
+        rounded-lg
+        border
+        border-gray-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:flex-row
+        sm:items-center
+        sm:justify-between
+    ">
         <Button
             text="← Previous"
             onClick={() => onPageChange(currentPage - 1)}

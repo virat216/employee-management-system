@@ -12,6 +12,7 @@ import EmptyState from "../../../components/common/EmptyState";
 import EmployeeFilterDialog from "../components/EmployeeFilterDialog";
 
 import type { EmployeeFilter } from "../types/employeeFilter";
+import ErrorState from "../../../components/common/ErrorState";
 
 import EmployeeTable from "../components/EmployeeTable";
 import EmployeeDialog from "../components/EmployeeDialog";
@@ -24,11 +25,6 @@ import { useDeleteEmployee } from "../hooks/useDeleteEmployee";
 import type { Employee } from "../types/employee";
 import type { EmployeeFormData } from "../types/employeeForm";
 import { Filter } from "lucide-react";
-
-
-
-
-
 const emptyEmployee: EmployeeFormData = {
     firstName: "",
     lastName: "",
@@ -76,6 +72,7 @@ const [filter, setFilter] =
     const {
     data,
     isLoading,
+    isError,
 } = useEmployeesQuery({
 
     page,
@@ -261,6 +258,28 @@ const totalPages = data?.totalPages ?? 0;
     },
 
 ];
+
+if (isError) {
+
+    return (
+
+        <MainLayout>
+
+            <PageHeader
+                title="Employees"
+                subtitle="Manage all employees."
+            />
+
+            <ErrorState
+                title="Unable to load employees"
+                message="Please try again later."
+            />
+
+        </MainLayout>
+
+    );
+
+}
 
     return (
 

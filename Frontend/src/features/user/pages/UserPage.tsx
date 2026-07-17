@@ -8,6 +8,7 @@ import SortDropdown from "../../../components/common/SortDropdown";
 import Pagination from "../../../components/common/Pagination";
 import ConfirmDialog from "../../../components/common/ConfirmDialog";
 import EmptyState from "../../../components/common/EmptyState";
+import ErrorState from "../../../components/common/ErrorState";
 
 import UserTable from "../components/UserTable";
 import UserDialog from "../components/UserDialog";
@@ -64,6 +65,8 @@ function UserPage() {
         data,
 
         isLoading,
+
+        isError,
 
     } = useUsersQuery({
 
@@ -219,6 +222,28 @@ function UserPage() {
         },
 
     ];
+
+    if (isError) {
+
+    return (
+
+        <MainLayout>
+
+            <PageHeader
+                title="Users"
+                subtitle="Manage system users."
+            />
+
+            <ErrorState
+                title="Unable to load users"
+                message="Please try again later."
+            />
+
+        </MainLayout>
+
+    );
+
+}
 
     return (
 

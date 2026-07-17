@@ -67,7 +67,7 @@ function Button({
                 px-6
                 py-3
                 font-semibold
-                transition
+                transition-all
 
                 ${
                     disabled

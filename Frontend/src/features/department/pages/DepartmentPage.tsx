@@ -18,6 +18,8 @@ import { useDeleteDepartment } from "../hooks/useDeleteDepartment";
 import type { Department } from "../types/department";
 import type { DepartmentRequest } from "../types/departmentRequest";
 
+import ErrorState from "../../../components/common/ErrorState";
+
 const emptyDepartment: DepartmentRequest = {
 
     name: "",
@@ -58,6 +60,8 @@ function DepartmentPage() {
         data,
 
         isLoading,
+
+        isError,
 
     } = useDepartmentsQuery({
 
@@ -204,6 +208,28 @@ function DepartmentPage() {
         },
 
     ];
+
+    if (isError) {
+
+    return (
+
+        <MainLayout>
+
+            <PageHeader
+                title="Departments"
+                subtitle="Manage all departments."
+            />
+
+            <ErrorState
+                title="Unable to load departments"
+                message="Please try again later."
+            />
+
+        </MainLayout>
+
+    );
+
+}
 
     return (
 

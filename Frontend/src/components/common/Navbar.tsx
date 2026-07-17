@@ -1,14 +1,30 @@
 import { UserCircle2 } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../auth/useAuth";
 
 function Navbar() {
 
     const {
-
         currentUser,
-
     } = useAuth();
+
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const pageTitles: Record<string, string> = {
+        "/dashboard": "Dashboard",
+        "/employees": "Employees",
+        "/departments": "Departments",
+        "/roles": "Roles",
+        "/users": "Users",
+        "/profile": "My Profile",
+    };
+
+    const pageTitle =
+        pageTitles[location.pathname] ??
+        "Employee Management System";
 
     return (
 
@@ -26,7 +42,7 @@ function Navbar() {
 
             <h1 className="text-2xl font-bold text-slate-800">
 
-                Dashboard
+                {pageTitle}
 
             </h1>
 
@@ -50,10 +66,22 @@ function Navbar() {
 
                 </div>
 
-                <UserCircle2
-                    size={42}
-                    className="text-slate-500"
-                />
+                <button
+                    onClick={() => navigate("/profile")}
+                    className="
+                        rounded-full
+                        p-1
+                        text-slate-500
+                        hover:text-blue-600
+                        hover:bg-slate-100
+                        transition-all
+                        duration-200
+                        cursor-pointer
+                    "
+                    title="My Profile"
+                >
+                    <UserCircle2 size={42} />
+                </button>
 
             </div>
 

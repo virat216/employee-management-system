@@ -18,6 +18,8 @@ import { useDeleteRole } from "../hooks/useDeleteRole";
 import type { Role } from "../types/role";
 import type { RoleFormData } from "../types/roleForm";
 
+import ErrorState from "../../../components/common/ErrorState";
+
 const emptyRole: RoleFormData = {
 
     name: "",
@@ -60,6 +62,8 @@ function RolePage() {
         data,
 
         isLoading,
+
+        isError,
 
     } = useRolesQuery({
 
@@ -216,6 +220,28 @@ function RolePage() {
         },
 
     ];
+
+    if (isError) {
+
+    return (
+
+        <MainLayout>
+
+            <PageHeader
+                title="Roles"
+                subtitle="Manage all job roles."
+            />
+
+            <ErrorState
+                title="Unable to load roles"
+                message="Please try again later."
+            />
+
+        </MainLayout>
+
+    );
+
+}
 
     return (
 

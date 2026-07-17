@@ -108,7 +108,7 @@ export function AuthProvider({
 
     function logout() {
 
-        localStorage.clear();
+        localStorage.removeItem("token");
 
         setCurrentUser(null);
 
