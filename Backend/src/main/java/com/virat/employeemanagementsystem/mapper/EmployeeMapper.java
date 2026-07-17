@@ -19,11 +19,19 @@ public interface EmployeeMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "department", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     Employee toEntity(EmployeeRequestDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "department", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     void updateEntity(
             EmployeeRequestDTO dto,
             @MappingTarget Employee employee

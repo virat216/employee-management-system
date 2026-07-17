@@ -1,8 +1,10 @@
 package com.virat.employeemanagementsystem.entity;
 
+import com.virat.employeemanagementsystem.entity.base.BaseEntity;
 import com.virat.employeemanagementsystem.security.role.SecurityRole;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "users")
@@ -10,12 +12,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String username;

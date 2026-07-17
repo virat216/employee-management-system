@@ -1,7 +1,9 @@
 package com.virat.employeemanagementsystem.entity;
 
+import com.virat.employeemanagementsystem.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "roles")
@@ -9,12 +11,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Role {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends BaseEntity {
 
     @Column(
             nullable = false,
@@ -27,7 +25,6 @@ public class Role {
     private String description;
 
     @Column(nullable = false)
-    @Builder.Default
     private boolean active = true;
 
 }

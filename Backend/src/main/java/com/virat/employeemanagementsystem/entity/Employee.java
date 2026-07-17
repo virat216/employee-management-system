@@ -1,7 +1,9 @@
 package com.virat.employeemanagementsystem.entity;
 
+import com.virat.employeemanagementsystem.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,14 +14,9 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Employee
+
+public class Employee extends BaseEntity
 {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, length = 50)
     private String firstName;
 
