@@ -1,365 +1,246 @@
 # Employee Management System
 
-A production-ready Employee Management System backend built using **Java**, **Spring Boot**, **Spring Security**, **JWT**, **Spring Data JPA**, and **PostgreSQL** following enterprise-level architecture and clean coding principles.
+A **production-inspired Full Stack Employee Management System** built using **Java, Spring Boot, Spring Security, JWT, PostgreSQL, React, TypeScript, and Tailwind CSS** following enterprise-level architecture and clean coding principles.
+
+The project demonstrates secure authentication, role-based authorization, reusable frontend components, scalable backend architecture, and modern software engineering practices commonly used in enterprise applications.
 
 ---
 
-# Project Overview
+## Features
 
-This project simulates a real-world Employee Management System used in organizations.
+### Authentication & Security
 
-The application follows enterprise backend development practices including:
+* JWT-based Authentication
+* Role-Based Authorization (RBAC)
+* Secure Password Encryption
+* Protected REST APIs
+* Spring Security Integration
 
-- Layered Architecture
-- DTO Pattern
-- MapStruct
-- Bean Validation
-- Global Exception Handling
-- JWT Authentication
-- Role-Based Authorization
-- Soft Delete
-- RESTful API Design
+### Employee Management
 
-The project is being developed phase by phase while following SDLC principles instead of creating simple CRUD applications.
+* Create, Update, Delete Employees
+* Employee Search
+* Pagination
+* Sorting
+* Advanced Filtering
+* Department Assignment
+* Role Assignment
 
----
+### Department Management
 
-# Features
+* Create, Update, Delete Departments
+* Search Departments
+* Pagination
+* Sorting
+* Validation for Duplicate Departments
 
-## Department Management
+### Role Management
 
-- Create Department
-- Get All Departments
-- Get Department by ID
-- Update Department
-- Delete Department
+* Create, Update, Delete Roles
+* Search & Sorting
+* Role Assignment
 
----
+### User Management
 
-## Employee Management
+* User CRUD Operations
+* Enable/Disable Users
+* Role Assignment
+* Employee Linking
 
-- Create Employee
-- Get All Employees
-- Get Employee by ID
-- Update Employee
-- Delete Employee
-- Department Mapping
-- Role Mapping
+### Dashboard
 
----
+* Business Statistics
+* Employee Overview
+* Quick Insights
 
-## Role Management
+### Audit Logs
 
-- Create Role
-- Get All Roles
-- Get Role by ID
-- Update Role
-- Soft Delete Role
-- Prevent Duplicate Roles
-- Prevent Assignment of Inactive Roles
-
----
-
-## User Management
-
-- Create User Account
-- Username Validation
-- BCrypt Password Encryption
-- One User Per Employee
-- Enable/Disable User
-
----
-
-## Authentication & Authorization
-
-- Spring Security
-- JWT Authentication
-- Stateless Authentication
-- BCrypt Password Encoding
-- Login API
-- JWT Authentication Filter
-- Custom UserDetailsService
-- Custom UserPrincipal
-- Role-Based Authorization
-- ADMIN
-- HR
-- EMPLOYEE
-
----
-
-## Validation
-
-- Jakarta Bean Validation
-- Custom Validation Messages
-- Request DTO Validation
-
----
-
-## Exception Handling
-
-- Global Exception Handler
-- Standard API Error Responses
-- Validation Error Responses
-- Custom Exceptions
-- Authentication Error Handling
-- Authorization Error Handling
-
----
-
-## Architecture
-
-- Layered Architecture
-- DTO Pattern
-- Repository Pattern
-- Service Layer
-- Controller Layer
-- MapStruct Mapping
-- Constructor Injection
+* Track System Activities
+* User Action History
 
 ---
 
 # Tech Stack
 
-| Technology | Version |
-|------------|----------|
-| Java | 25 |
-| Spring Boot | 4.x |
-| Spring Security | Latest |
-| Spring Data JPA | Latest |
-| PostgreSQL | 18 |
-| Maven | Latest |
-| JWT | JJWT |
-| Lombok | ✓ |
-| MapStruct | ✓ |
-| Jakarta Validation | ✓ |
+## Backend
+
+* Java 21
+* Spring Boot
+* Spring Security
+* Spring Data JPA
+* JWT Authentication
+* MapStruct
+* Lombok
+* Bean Validation
+* PostgreSQL
+* Maven
+
+## Frontend
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* TanStack Query (React Query)
+* Axios
+* React Router DOM
+* Lucide React
+
+---
+
+# Project Architecture
+
+```text
+React Frontend
+        │
+ REST APIs (HTTP)
+        │
+Spring Boot Backend
+        │
+ Service Layer
+        │
+ Repository Layer
+        │
+ PostgreSQL Database
+```
 
 ---
 
 # Project Structure
 
 ```
-src
-└── main
-    ├── java
-    │
-    └── com.virat.employeemanagementsystem
-        ├── common
-        ├── config
-        ├── controller
-        ├── data
-        ├── dto
-        │   ├── request
-        │   └── response
-        ├── entity
-        ├── exception
-        ├── mapper
-        ├── repository
-        ├── security
-        │   ├── config
-        │   ├── jwt
-        │   ├── principal
-        │   └── service
-        ├── service
-        │   └── impl
-        └── EmployeeManagementSystemApplication.java
+employee-management-system
+│
+├── backend
+│   ├── config
+│   ├── controller
+│   ├── dto
+│   ├── entity
+│   ├── exception
+│   ├── mapper
+│   ├── repository
+│   ├── security
+│   ├── service
+│   └── util
+│
+├── frontend
+│   ├── assets
+│   ├── components
+│   ├── features
+│   ├── hooks
+│   ├── layouts
+│   ├── pages
+│   ├── services
+│   ├── types
+│   └── utils
+│
+└── README.md
 ```
 
 ---
 
-# Architecture
+# Key Features
 
-```
-                Client
-
-                   │
-
-                   ▼
-
-         Spring Security Filter
-
-                   │
-
-                   ▼
-
-         JWT Authentication Filter
-
-                   │
-
-                   ▼
-
-            REST Controller
-
-                   │
-
-                   ▼
-
-           Request DTO (@Valid)
-
-                   │
-
-                   ▼
-
-             Service Layer
-
-                   │
-
-                   ▼
-
-              MapStruct
-
-                   │
-
-                   ▼
-
-                Entity
-
-                   │
-
-                   ▼
-
-             Repository
-
-                   │
-
-                   ▼
-
-             PostgreSQL Database
-
-                   │
-
-                   ▼
-
-                Entity
-
-                   │
-
-                   ▼
-
-              MapStruct
-
-                   │
-
-                   ▼
-
-            Response DTO
-
-                   │
-
-                   ▼
-
-             ApiResponse<T>
-```
+* Enterprise Layered Architecture
+* DTO Pattern
+* MapStruct Mapping
+* Bean Validation
+* Global Exception Handling
+* JWT Authentication
+* Role-Based Authorization
+* Feature-Based Frontend Architecture
+* Reusable Components
+* Reusable Dialogs
+* Pagination
+* Searching
+* Sorting
+* Advanced Filtering
+* Responsive UI
+* Clean Code Practices
 
 ---
 
-# Security Flow
+# 📸 Application Screenshots
 
-```
-Client
+## Authentication
 
-   │
+### Login
 
-Login
-
-   │
-
-Username + Password
-
-   │
-
-AuthenticationManager
-
-   │
-
-CustomUserDetailsService
-
-   │
-
-JWT Generated
-
-   │
-
-Client Stores JWT
-
-   │
-
-Bearer Token
-
-   │
-
-JwtAuthenticationFilter
-
-   │
-
-SecurityContext
-
-   │
-
-Role-Based Authorization
-
-   │
-
-Controller
-```
+![Login](screenshots/login.png)
 
 ---
 
-# API Modules
+## Dashboard
 
-- Authentication APIs
-- Department APIs
-- Employee APIs
-- Role APIs
-- User APIs
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
-# Database Tables
+## Employee Management
 
-- departments
-- employees
-- roles
-- users
+### Employee List
 
----
+![Employees](screenshots/employees.png)
 
-# Current Progress
+### Create Employee
 
-## Completed
-
-- Project Setup
-- PostgreSQL Integration
-- Department Module
-- Employee Module
-- Role Module
-- User Module
-- DTO Pattern
-- MapStruct
-- Bean Validation
-- Global Exception Handling
-- Custom Exceptions
-- API Response Wrapper
-- JWT Authentication
-- Spring Security
-- Role-Based Authorization
-- BCrypt Password Encryption
-- Soft Delete
-- Data Initializer
+![Create Employee](screenshots/create_employee_dialog.png)
 
 ---
 
-# Upcoming Features
+## Department Management
 
-- Swagger / OpenAPI
-- Pagination
-- Sorting
-- Searching
-- Logging
-- Auditing
-- Unit Testing
-- Docker
-- Deployment
-- CI/CD
+![Departments](screenshots/departments.png)
+
+---
+
+## Role Management
+
+![Roles](screenshots/roles.png)
+
+---
+
+## User Management
+
+![Users](screenshots/users.png)
+
+---
+
+## User Profile
+
+![Profile](screenshots/profile.png)
+
+# Database
+
+PostgreSQL is used as the relational database.
+
+Main Entities:
+
+* Employee
+* Department
+* Role
+* User
+* Audit Log
+
+Relationships:
+
+* One Department → Many Employees
+* One Role → Many Users
+* One Employee → One User
+
+---
+
+# REST API Modules
+
+| Module         | Status |
+| -------------- | ------ |
+| Authentication | ✅      |
+| Employees      | ✅      |
+| Departments    | ✅      |
+| Roles          | ✅      |
+| Users          | ✅      |
+| Dashboard      | ✅      |
+| Audit Logs     | ✅      |
 
 ---
 
@@ -371,39 +252,66 @@ Controller
 git clone https://github.com/virat216/employee-management-system.git
 ```
 
-## Navigate
+---
+
+## Backend
 
 ```bash
-cd employee-management-system
+cd backend
+mvn clean install
+mvn spring-boot:run
 ```
 
-## Configure Database
+Backend runs on:
 
-Update:
-
-```properties
-application.properties
+```
+http://localhost:8080
 ```
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/employee_management
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
+---
 
-## Run
+## Frontend
 
 ```bash
-./mvnw spring-boot:run
+cd frontend
+npm install
+npm run dev
 ```
 
-or run
+Frontend runs on:
 
 ```
-EmployeeManagementSystemApplication
+http://localhost:5173
 ```
 
-from IntelliJ IDEA.
+---
+
+# Environment Variables
+
+Backend (`application.properties`)
+
+```properties
+spring.datasource.url=YOUR_DATABASE_URL
+spring.datasource.username=YOUR_DATABASE_USERNAME
+spring.datasource.password=YOUR_DATABASE_PASSWORD
+
+jwt.secret=YOUR_SECRET_KEY
+jwt.expiration=86400000
+```
+
+---
+
+# Future Improvements
+
+* Docker Support
+* Docker Compose
+* Swagger / OpenAPI Documentation
+* CI/CD Pipeline
+* Unit Testing
+* Integration Testing
+* Email Notifications
+* Excel Export
+* PDF Export
 
 ---
 
@@ -411,14 +319,5 @@ from IntelliJ IDEA.
 
 **Virat Jaiswal**
 
-GitHub:
-https://github.com/virat216
-
-LinkedIn:
-https://www.linkedin.com/in/viratjaiswal216/
-
----
-
-# License
-
-This project is developed for learning purposes and portfolio demonstration.
+* GitHub: https://github.com/virat216
+* LinkedIn: https://www.linkedin.com/in/viratjaiswal216/
